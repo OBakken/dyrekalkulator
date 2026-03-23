@@ -328,14 +328,14 @@ export default function DyrDorForDeg() {
       {/* Key stats */}
       <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
         <div style={{ flex: 1, background: "#1a1a1a", borderRadius: 10, padding: "10px 14px" }}>
-          <div style={{ fontSize: 10, color: "#777", textTransform: "uppercase", letterSpacing: 1 }}>Allerede døde</div>
-          <div style={{ fontSize: 26, fontWeight: 700, color: "#999" }}>{alreadyTotal}</div>
-          <div style={{ fontSize: 11, color: "#555" }}>0–{myAge} år</div>
+          <div style={{ fontSize: 10, color: "#777", textTransform: "uppercase", letterSpacing: 1 }}>Døde så langt</div>
+          <div style={{ fontSize: 26, fontWeight: 700, color: "#E24B4A" }}>{totalNow}</div>
+          <div style={{ fontSize: 11, color: "#555" }}>0–{Math.floor(sliderAge)} år</div>
         </div>
         <div style={{ flex: 1, background: "#1a1a1a", borderRadius: 10, padding: "10px 14px" }}>
           <div style={{ fontSize: 10, color: "#777", textTransform: "uppercase", letterSpacing: 1 }}>Gjenstår</div>
-          <div style={{ fontSize: 26, fontWeight: 700, color: "#E24B4A" }}>{Math.max(0, totalAtDeath - alreadyTotal)}</div>
-          <div style={{ fontSize: 11, color: "#555" }}>{myAge}–{deathAge} år</div>
+          <div style={{ fontSize: 26, fontWeight: 700, color: "#999" }}>{Math.max(0, totalAtDeath - totalNow)}</div>
+          <div style={{ fontSize: 11, color: "#555" }}>{Math.floor(sliderAge)}–{deathAge} år</div>
         </div>
         <div style={{ flex: 1, background: "#1a1a1a", borderRadius: 10, padding: "10px 14px" }}>
           <div style={{ fontSize: 10, color: "#777", textTransform: "uppercase", letterSpacing: 1 }}>Totalt i livet</div>
@@ -379,16 +379,19 @@ export default function DyrDorForDeg() {
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
                   <span style={{ fontSize: 14, fontWeight: 600, color: "#ddd" }}>{a.name}</span>
-                  <span style={{ fontSize: 20, fontWeight: 700, color: "#E24B4A" }}>{a.countAtDeath}</span>
+                  <div style={{ textAlign: "right" }}>
+                    <span style={{ fontSize: 22, fontWeight: 700, color: "#E24B4A" }}>{a.countNow}</span>
+                    <span style={{ fontSize: 12, color: "#555", marginLeft: 4 }}>/ {a.countAtDeath}</span>
+                  </div>
                 </div>
                 <div style={{ height: 5, background: "#2a2a2a", borderRadius: 3, margin: "5px 0", overflow: "hidden" }}>
                   <div style={{ height: "100%", borderRadius: 3,
-                    background: `linear-gradient(to right, #555 ${(alreadyCount/Math.max(a.countAtDeath,1))*100}%, ${a.color} ${(alreadyCount/Math.max(a.countAtDeath,1))*100}%)`,
+                    background: a.color,
                     width: `${(a.countNow / Math.max(a.countAtDeath, 1)) * 100}%`,
                     transition: "width 0.15s" }}/>
                 </div>
                 <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11 }}>
-                  <span style={{ color: "#666" }}>{alreadyCount} allerede · {remaining > 0 ? `${remaining} gjenstår` : "ferdig"}</span>
+                  <span style={{ color: "#666" }}>{Math.round(a.kgNow)} kg så langt</span>
                   <span style={{ color: "#555" }}>{Math.round(a.kgAtDeath)} kg totalt</span>
                 </div>
               </div>
