@@ -254,8 +254,7 @@ export default function DyrDorForDeg() {
     if (!lastTick.current) lastTick.current = ts;
     const dt = ts - lastTick.current;
     lastTick.current = ts;
-    const totalYears = deathAge - myAge;
-    const speed = Math.max(1, totalYears / 30); // traverse in ~30 secs
+    const speed = Math.max(1, deathAge / 30); // traverse full life in ~30 secs
     setSliderAge(a => {
       const next = a + (dt / 1000) * speed;
       if (next >= deathAge) {
@@ -266,7 +265,7 @@ export default function DyrDorForDeg() {
       return next;
     });
     rafRef.current = requestAnimationFrame(tick);
-  }, [deathAge, myAge]);
+  }, [deathAge]);
 
   useEffect(() => {
     if (playing) { lastTick.current = 0; rafRef.current = requestAnimationFrame(tick); }
